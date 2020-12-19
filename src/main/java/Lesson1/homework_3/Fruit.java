@@ -2,6 +2,13 @@ package Lesson1.homework_3;
 
 public class Fruit {
 
-    private float fruitWeight;
+    private final float fruitWeight;
 
+    public Fruit(float fruitWeight) {
+        this.fruitWeight = fruitWeight;
+    }
+
+    public float getFruitWeight() {
+        return fruitWeight;
+    }
 }
