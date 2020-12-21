@@ -6,7 +6,6 @@ public class Test {
         Box<Orange> orangeBox = new Box<>(new Orange());
         Box<Apple> secondAppleBox = new Box<>();
 
-
         appleBox.addFruit(new Apple());
 
         orangeBox.addFruit(new Orange());
@@ -22,6 +21,5 @@ public class Test {
         System.out.println("Вес appleBox после трансфера: " + appleBox.getWeight());
         System.out.println("Вес orangeBox после трансфера: " + orangeBox.getWeight());
         System.out.println("Вес secondAppleBox после трансфера: " + secondAppleBox.getWeight());
-
     }
 }
