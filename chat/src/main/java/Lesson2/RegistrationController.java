@@ -50,14 +50,17 @@ public class RegistrationController {
     }
 
     public void enter(ActionEvent actionEvent) throws IOException, SQLException, ClassNotFoundException {
-        UsersSQLiteDao userDao = new UsersSQLiteDao();
-        userDao.updateUser(this);
-        Parent auth = FXMLLoader.load(getClass().getResource("auth.fxml"));
-        Stage stage = new Stage();
-        stage.setTitle("Вход");
-        stage.setScene(new Scene(auth));
-        stage.setResizable(false);
-        stage.show();
-        login1.getScene().getWindow().hide();
+        try {
+            UsersSQLiteDao.getInstance().updateUser(login1.getText(), password1.getText(), nickname.getText(), email.getText());
+            Parent auth = FXMLLoader.load(getClass().getResource("auth.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Вход");
+            stage.setScene(new Scene(auth));
+            stage.setResizable(false);
+            stage.show();
+            login1.getScene().getWindow().hide();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

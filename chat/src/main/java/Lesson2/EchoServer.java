@@ -3,7 +3,6 @@ package Lesson2;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.sql.SQLException;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class EchoServer {
@@ -14,7 +13,7 @@ public class EchoServer {
     public EchoServer() {
         // web 8080
         running = true;
-        try(ServerSocket server = new ServerSocket(8189)) {
+        try(ServerSocket server = new ServerSocket(8180)) {
             System.out.println("Server started!");
             while (running) {
                 System.out.println("Server is waiting connection");
@@ -56,7 +55,7 @@ public class EchoServer {
         clients.remove(client);
     }
 
-    public static void main(String[] args) throws SQLException, ClassNotFoundException, InterruptedException {
+    public static void main(String[] args) {
         new EchoServer();
     }
 }

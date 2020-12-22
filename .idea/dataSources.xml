@@ -12,7 +12,7 @@
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\Рамис Билалов\Desktop\JAVA_3_Homeworks_MAVEN\chat\src\main\resources\Lesson2\chatDB</jdbc-url>
+      <jdbc-url>jdbc:sqlite:chatDB</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
       <libraries>
         <library>

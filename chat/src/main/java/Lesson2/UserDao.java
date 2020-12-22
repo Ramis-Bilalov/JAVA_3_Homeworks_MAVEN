@@ -6,9 +6,8 @@ public interface UserDao {
 
     boolean userExists(String login, String password) throws SQLException;
 
-    String getNickname();
+    void updateUser(String login, String password, String nickname, String email) throws SQLException;
 
-    void setNickname(String nickname);
+    String getNickname(String login, String password);
 
-    void updateUser(RegistrationController controller) throws SQLException;
 }

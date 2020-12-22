@@ -7,58 +7,80 @@ import java.sql.*;
 public class UsersSQLiteDao implements UserDao, Closeable {
 
     private Connection connection;
-    private Statement statement;
-    private String nickname;
-
-
+    private PreparedStatement getNicknameStatement;
+    private PreparedStatement updateNickStatement;
+    private PreparedStatement userExistsStatement;
+    private static UsersSQLiteDao instance;
+    private String nick;
 
     public UsersSQLiteDao() throws ClassNotFoundException, SQLException {
         Class.forName("org.sqlite.JDBC");
         connection = DriverManager.getConnection("jdbc:sqlite:chatDB");
-        statement = connection.createStatement();
+        try {
+            getNicknameStatement = connection.prepareStatement("SELECT NAME FROM USERS WHERE LOGIN = ? AND PASSWORD = ?");
+            updateNickStatement = connection.prepareStatement("INSERT INTO USERS(login, password, name, email) VALUES(?, ?, ?, ?)");
+            userExistsStatement = connection.prepareStatement("SELECT NAME FROM USERS WHERE LOGIN = ? AND PASSWORD = ?");
+        } catch(SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public String getNick() {
+        return nick;
+    }
+
+    public void setNick(String nick) {
+        this.nick = nick;
+    }
+
+    public static UsersSQLiteDao getInstance() throws SQLException, ClassNotFoundException {
+        if (instance == null) {
+            instance = new UsersSQLiteDao();
+        }
+        return instance;
     }
 
     @Override
     public boolean userExists(String login, String password) throws SQLException {
-        String sql1 = String.format("SELECT NAME FROM USERS WHERE LOGIN = '%s'", login);
-        ResultSet rs1 = statement.executeQuery(sql1);
-        setNickname(rs1.getString("NAME"));
-        if(rs1.next()) {
-            String sql2 = String.format("SELECT LOGIN FROM USERS WHERE PASSWORD = '%s'", password);
-            ResultSet rs2 = statement.executeQuery(sql2);
-
-            return rs2.next();
-        } return false;
+        userExistsStatement.setString(1, login);
+        userExistsStatement.setString(2, password);
+        ResultSet resultSet = userExistsStatement.executeQuery();
+        return resultSet.next();
     }
 
     @Override
-    public String getNickname() {
-        System.out.println("ниунейм" + nickname);
-        return nickname;
+    public void updateUser(String login, String password, String nickname, String email) throws SQLException {
+        try {
+            updateNickStatement.setString(1, login);
+            updateNickStatement.setString(2, password);
+            updateNickStatement.setString(3, nickname);
+            updateNickStatement.setString(4, email);
+            updateNickStatement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     @Override
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-
-    @Override
-    public void updateUser(RegistrationController controller) throws SQLException {
-        String sql;
-        sql = String.format("INSERT INTO USERS(login, password, name, email) " +
-                        "VALUES('%s', '%s', '%s', '%s')",
-                controller.getLogin1(),
-                controller.getPassword1(),
-                controller.getNickname(),
-                controller.getEmail());
-        statement.execute(sql);
+    public String getNickname(String login, String password) {
+        setNick(login);
+        try {
+            getNicknameStatement.setString(1, login);
+            getNicknameStatement.setString(2, password);
+            getNicknameStatement.execute();
+            nick = getNicknameStatement.executeQuery().getString("NAME");
+            return nick;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } return null;
     }
 
     @Override
     public void close() throws IOException {
         try {
-            statement.close();
+            getNicknameStatement.close();
+            updateNickStatement.close();
+            userExistsStatement.close();
             connection.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

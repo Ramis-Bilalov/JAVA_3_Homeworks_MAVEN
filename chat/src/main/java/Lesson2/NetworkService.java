@@ -1,8 +1,6 @@
 package Lesson2;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 
 public class NetworkService {
@@ -13,7 +11,7 @@ public class NetworkService {
 
     private NetworkService() {
         try {
-            Socket socket = new Socket("localhost", 8189);
+            Socket socket = new Socket("localhost", 8180);
             os = new ObjectOutputStream(socket.getOutputStream());
             is = new ObjectInputStream(socket.getInputStream());
         } catch (Exception e) {
@@ -49,5 +47,4 @@ public class NetworkService {
     public ObjectInputStream getInputStream() {
         return is;
     }
-
 }
