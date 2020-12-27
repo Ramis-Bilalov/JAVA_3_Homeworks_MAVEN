@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class ChatController implements Initializable {
@@ -39,11 +40,19 @@ public class ChatController implements Initializable {
         stage.setResizable(false);
         stage.show();
         input.getScene().getWindow().hide();
+        IoHistoryServiceImpl.getInstance().saveHistory(Arrays.asList(output.getText().split("\n").clone()));
         Platform.exit();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        try {
+            IoHistoryServiceImpl.getInstance().getHistory(50).forEach(historyLine -> {
+                output.appendText(historyLine + "\n");
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         userName = NetworkService.getInstance().getUserName();
         reader = new CharReader(output, NetworkService.getInstance().getInputStream());
         output.setWrapText(true);
