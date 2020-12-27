@@ -6,8 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import java.io.IOException;
-import java.sql.SQLException;
 
 public class RegistrationController {
 
@@ -49,7 +47,7 @@ public class RegistrationController {
         this.nickname = nickname;
     }
 
-    public void enter(ActionEvent actionEvent) throws IOException, SQLException, ClassNotFoundException {
+    public void enter(ActionEvent actionEvent) {
         try {
             UsersSQLiteDao.getInstance().updateUser(login1.getText(), password1.getText(), nickname.getText(), email.getText());
             Parent auth = FXMLLoader.load(getClass().getResource("auth.fxml"));

@@ -1,5 +1,6 @@
 package Lesson2;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -30,7 +31,7 @@ public class ChatController implements Initializable {
         input.clear();
     }
 
-    public void quit(ActionEvent actionEvent) throws IOException, InterruptedException {
+    public void quit(ActionEvent actionEvent) throws IOException {
         Parent chat = FXMLLoader.load(getClass().getResource("auth.fxml"));
         Stage stage = new Stage();
         stage.setTitle("Вход в личный аккаунт");
@@ -38,15 +39,14 @@ public class ChatController implements Initializable {
         stage.setResizable(false);
         stage.show();
         input.getScene().getWindow().hide();
+        Platform.exit();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-            userName = NetworkService.getInstance().getUserName();
-            reader = new CharReader(output, NetworkService.getInstance().getInputStream());
-            output.setWrapText(true);
-            reader.start();
-
-
+        userName = NetworkService.getInstance().getUserName();
+        reader = new CharReader(output, NetworkService.getInstance().getInputStream());
+        output.setWrapText(true);
+        reader.start();
     }
 }

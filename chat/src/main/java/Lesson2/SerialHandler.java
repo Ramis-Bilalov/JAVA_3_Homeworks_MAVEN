@@ -6,6 +6,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+
 public class SerialHandler implements Closeable, Runnable {
 
     private static int cnt = 0;
@@ -13,20 +14,15 @@ public class SerialHandler implements Closeable, Runnable {
     private final ObjectInputStream is;
     private final ObjectOutputStream os;
     private boolean running;
-    private final byte [] buffer;
     private final EchoServer server;
 
 
     public SerialHandler(Socket socket, EchoServer server) throws IOException {
-        System.out.println("1");
         os = new ObjectOutputStream(socket.getOutputStream());
-        System.out.println("2");
         is = new ObjectInputStream(socket.getInputStream());
-        System.out.println("3");
         cnt++;
         userName = "username" + cnt;
         running = true;
-        buffer = new byte[256];
         this.server = server;
         os.writeObject(Message.of(userName, "OK"));
         os.flush();
@@ -44,9 +40,7 @@ public class SerialHandler implements Closeable, Runnable {
     public void run() {
         while (running) {
             try {
-
                 Message message = (Message) is.readObject();
-
                 if (message.getMessage().startsWith("/changeNick")) {
                     String[] data = message.getMessage().split(" ");
                     String oldName = userName;

@@ -40,6 +40,13 @@ public class UsersSQLiteDao implements UserDao, Closeable {
         return instance;
     }
 
+    public String setAuth(String login, String password) throws SQLException {
+        getNicknameStatement.setString(1, login);
+        getNicknameStatement.setString(2, password);
+        nick = getNicknameStatement.executeQuery().getString("NAME");
+        return nick;
+    }
+
     @Override
     public boolean userExists(String login, String password) throws SQLException {
         userExistsStatement.setString(1, login);
@@ -63,7 +70,6 @@ public class UsersSQLiteDao implements UserDao, Closeable {
 
     @Override
     public String getNickname(String login, String password) {
-        setNick(login);
         try {
             getNicknameStatement.setString(1, login);
             getNicknameStatement.setString(2, password);

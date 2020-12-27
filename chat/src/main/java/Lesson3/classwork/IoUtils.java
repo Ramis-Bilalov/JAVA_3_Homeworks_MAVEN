@@ -9,16 +9,16 @@ public final class IoUtils {
     private IoUtils() {}
 
     public static void copy(String src, String dst) throws IOException {
-        long start = Instant.now().toEpochMilli();
-        InputStream is = new FileInputStream(src);
-        OutputStream os = new FileOutputStream(dst);
-        int cur = 0;
-        while((cur = is.read()) != -1) {
-            os.write(cur);
-        }
-        os.flush();
-        long end = Instant.now().toEpochMilli();
-        System.out.println("time: " + (end - start));
+//        long start = Instant.now().toEpochMilli();
+//        InputStream is = new FileInputStream(src);
+//        OutputStream os = new FileOutputStream(dst);
+//        int cur = 0;
+//        while((cur = is.read()) != -1) {
+//            os.write(cur);
+//        }
+//        os.flush();
+//        long end = Instant.now().toEpochMilli();
+//        System.out.println("time: " + (end - start));
     }
 
     public static void copyBuffered(String src, String dst) throws IOException {

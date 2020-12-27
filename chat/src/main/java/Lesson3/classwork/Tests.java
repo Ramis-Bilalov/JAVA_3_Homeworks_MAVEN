@@ -7,6 +7,6 @@ public class Tests {
         InputStream stream = Tests.class.getResourceAsStream("data.txt");
         OutputStream os = new FileOutputStream("data.txt", true);
         IoUtils.writeString(os,"Hello World");
-        IoUtils.copyBuffered("history.txt", "historyto.txt");
+        //IoUtils.copyBuffered("history.txt", "historyto.txt");
     }
 }
