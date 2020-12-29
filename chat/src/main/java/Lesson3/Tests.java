@@ -1,4 +1,4 @@
-package Lesson3.classwork;
+package Lesson3;
 
 import java.io.*;
 
