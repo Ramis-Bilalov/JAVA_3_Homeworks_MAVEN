@@ -1,5 +1,6 @@
 package Lesson4;
 
+import lombok.SneakyThrows;
 import java.util.concurrent.TimeUnit;
 
 public class CustomRunner implements Runnable {
@@ -17,25 +18,18 @@ public class CustomRunner implements Runnable {
         this.s = s;
     }
 
+    @SneakyThrows
     @Override
     public void run() {
         while(true) {
             synchronized (monitor) {
                 if(currentNumber != number) {
-                    try {
-                        monitor.wait();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    monitor.wait();
                 } else {
                     currentNumber = (currentNumber + 1) % 2;
                     monitor.notify();
                     System.out.print(s);
-                    try {
-                        TimeUnit.MILLISECONDS.sleep(300);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    TimeUnit.MILLISECONDS.sleep(300);
                 }
             }
         }
