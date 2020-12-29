@@ -1,4 +1,4 @@
-package Lesson4;
+package Lesson4.classwork;
 
 import java.util.concurrent.TimeUnit;
 
