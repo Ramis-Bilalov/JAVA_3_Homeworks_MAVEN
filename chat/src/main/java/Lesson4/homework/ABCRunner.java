@@ -34,8 +34,11 @@ public class ABCRunner implements Runnable {
                     }
                     monitor.notifyAll();
                     System.out.print(s);
-                    if(counter == 5) break;
-                    TimeUnit.MILLISECONDS.sleep(30);
+                    if(counter == 5) {
+                        //System.out.println("\ncounter == 5");
+                        break;
+                    }
+                    TimeUnit.MILLISECONDS.sleep(3);
                 }
             }
         }

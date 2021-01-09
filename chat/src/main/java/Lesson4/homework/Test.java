@@ -6,9 +6,9 @@ public class Test {
         Thread t1 = new Thread(new ABCRunner(
                 0, mon, "A"));
         Thread t2 = new Thread(new ABCRunner(
-                2, mon, "C"));
-        Thread t3 = new Thread(new ABCRunner(
                 1, mon, "B"));
+        Thread t3 = new Thread(new ABCRunner(
+                2, mon, "C"));
         t1.start();
         t2.start();
         t3.start();
