@@ -4,10 +4,13 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class EchoServer {
 
     private boolean running;
+    //private ExecutorService executorService;
     private ConcurrentLinkedDeque<SerialHandler> clients = new ConcurrentLinkedDeque<>();
 
     public EchoServer() {
@@ -21,7 +24,10 @@ public class EchoServer {
                 System.out.println("Client accepted!");
                 SerialHandler handler = new SerialHandler(socket, this);
                 clients.add(handler);
-                new Thread(handler).start();
+                //new Thread(handler).start();
+                ExecutorService executorService = Executors.newFixedThreadPool(1);
+                executorService.execute(handler);
+
                 System.out.println("Client info: " + socket.getInetAddress());
             }
         } catch (Exception e) {
