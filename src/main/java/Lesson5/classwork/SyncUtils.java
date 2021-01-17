@@ -1,4 +1,4 @@
-package Lesson5;
+package Lesson5.classwork;
 
 import java.util.Scanner;
 import java.util.concurrent.*;
