@@ -1,8 +1,9 @@
 package Lesson2;
 
+import java.io.Closeable;
 import java.sql.SQLException;
 
-public interface StudentsDao {
+public interface StudentsDao extends Closeable {
 
     boolean studentExists(int id) throws SQLException;
 
