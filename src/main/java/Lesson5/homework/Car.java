@@ -10,6 +10,7 @@ public class Car implements Runnable {
     private Race race;
     private int speed;
     private String name;
+    private int stageCount;
     Semaphore smp = new Semaphore(4);
 
     public Car(Race race, int speed) {
@@ -17,6 +18,10 @@ public class Car implements Runnable {
         this.speed = speed;
         CARS_COUNT++;
         this.name = "Participant #" + CARS_COUNT;
+    }
+
+    public Race getRace() {
+        return race;
     }
 
     public String getName() {

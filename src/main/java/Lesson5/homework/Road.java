@@ -30,6 +30,5 @@ public class Road extends Stage {
         if(counterf == 4) {
             System.out.println("IMPORTANT ANNOUNCEMENT >>> Race is finished!!!");
         }
-
     }
 }
