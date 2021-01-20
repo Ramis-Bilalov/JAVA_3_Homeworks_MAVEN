@@ -17,11 +17,9 @@ public class EchoServer {
         // web 8080
         running = true;
         try(ServerSocket server = new ServerSocket(8180)) {
-            System.out.println("Server started!");
             while (running) {
                 System.out.println("Server is waiting connection");
                 Socket socket = server.accept();
-                System.out.println("Client accepted!");
                 SerialHandler handler = new SerialHandler(socket, this);
                 clients.add(handler);
                 //new Thread(handler).start();

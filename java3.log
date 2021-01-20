@@ -1,4 +1,0 @@
-
-[2021-01-19 21:56:43 INFO  UserService: sayHello:15] INFO
-[2021-01-19 21:56:43 DEBUG UserService: sayHello:16] DEBUG
-[2021-01-19 21:56:43 DEBUG UserService: sayHello:18] x = 3, list = [123]
