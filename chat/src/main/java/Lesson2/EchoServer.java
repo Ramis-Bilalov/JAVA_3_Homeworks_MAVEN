@@ -1,5 +1,9 @@
 package Lesson2;
 
+import org.apache.log4j.PropertyConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -12,14 +16,21 @@ public class EchoServer {
     private boolean running;
     //private ExecutorService executorService;
     private ConcurrentLinkedDeque<SerialHandler> clients = new ConcurrentLinkedDeque<>();
+    private static final Logger LOG = LoggerFactory.getLogger(EchoServer.class);
 
     public EchoServer() {
         // web 8080
         running = true;
         try(ServerSocket server = new ServerSocket(8180)) {
+            String log4jConfPath = "src/main/resources/log4j.properties";
+            PropertyConfigurator.configure(log4jConfPath);
+            String log = "Server started!";
+            LOG.info(log);
             while (running) {
                 System.out.println("Server is waiting connection");
                 Socket socket = server.accept();
+                log = "Client accepted!";
+                LOG.info(log);
                 SerialHandler handler = new SerialHandler(socket, this);
                 clients.add(handler);
                 //new Thread(handler).start();
@@ -29,7 +40,8 @@ public class EchoServer {
                 System.out.println("Client info: " + socket.getInetAddress());
             }
         } catch (Exception e) {
-            System.out.println("Server crashed");
+            String log = "Server crashed";
+            LOG.info(log);
         }
     }
 
@@ -44,6 +56,8 @@ public class EchoServer {
     public void broadCast(Message msg) throws IOException {
         for (SerialHandler client : clients) {
             client.sendMessage(msg);
+            String log = "Сообщение: " + msg.getMessage();
+            LOG.info(log);
         }
     }
 
